@@ -2,6 +2,10 @@ const express = require("express");
 const router = new express.Router();
 const users = require("../models/UserSchema");
 
+router.get("/", async (req, res) => {
+  res.send("Space Explorer");
+});
+
 router.post("/addScore", async (req, res) => {
   try {
     var username = req.body.username;
