@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const users = require("../models/UserSchema");
+const key = "OD0sQQvg6gmwUKqZXtLv";
 
 router.get("/", async (req, res) => {
   res.send("Space Explorer");
@@ -8,6 +9,8 @@ router.get("/", async (req, res) => {
 
 router.post("/addScore", async (req, res) => {
   try {
+    if (req.body.key != key)
+      return res.status(401).json({ error: "authentication error" });
     var username = req.body.username;
     var score = req.body.score;
     var uniqueId = req.body.uniqueId;
@@ -36,8 +39,10 @@ router.post("/addScore", async (req, res) => {
   }
 });
 
-router.get("/getLeaderboard", async (req, res) => {
+router.get("/getLeaderboard/:key", async (req, res) => {
   try {
+    if (req.params.key != key)
+      return res.status(401).json({ error: "authentication error" });
     let scores = await users.find({}, { _id: 0 }).sort({ score: -1 }).limit(10);
     res.json({ entries: scores });
   } catch (error) {
