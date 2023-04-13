@@ -1,7 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const router = new express.Router();
 const users = require("../models/UserSchema");
-const key = "OD0sQQvg6gmwUKqZXtLv";
+const key = process.env.key;
 
 router.get("/", async (req, res) => {
   res.send("Space Explorer");
