@@ -2,7 +2,7 @@ require("./connection");
 const express = require("express");
 const app = express();
 const scores = require("./routers/scores");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 
 app.use(express.json({ extended: true, limit: "5mb", parameterLimit: 100000 }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
