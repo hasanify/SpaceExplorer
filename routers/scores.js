@@ -54,4 +54,20 @@ router.get("/getLeaderboard/:key", async (req, res) => {
   }
 });
 
+router.delete("/deleteScore/", async (req, res) => {
+  try {
+    if (req.body.key != key)
+      return res.status(401).json({ error: "authentication error" });
+    let username = req.body.username;
+    await users.deleteOne({ username: username }).then(() => {
+      res.json({ msg: "user score deleted" });
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "an error occurred while trying to delete score" });
+  }
+});
+
 module.exports = router;
